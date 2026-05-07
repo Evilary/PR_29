@@ -1,0 +1,46 @@
+﻿<Page x:Class="UserRoleManager_Чернышков.View.Stats"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Stats">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock FontSize="18" FontWeight="SemiBold" Text="Статистика (агрегатные функции)"/>
+
+        <StackPanel Grid.Row="1" Margin="0,10,0,10">
+            <TextBlock Text="{Binding UsersCount, StringFormat=Всего пользователей: {0}}"/>
+            <TextBlock Text="{Binding RolesCount, StringFormat=Всего ролей: {0}}"/>
+            <TextBlock Text="{Binding UsersWithoutRoleCount, StringFormat=Пользователей без роли: {0}}"/>
+            <TextBlock Text="{Binding TopRoleName, StringFormat=Роль с максимумом пользователей: {0}}"/>
+            <TextBlock Text="{Binding TopRoleUsersCount, StringFormat=Количество в этой роли: {0}}"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding UsersByRole}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Роль" Binding="{Binding RoleName}" Width="*"/>
+                <DataGridTextColumn Header="Кол-во пользователей" Binding="{Binding UsersCount}" Width="200"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row="3"
+                Content="Обновить статистику"
+                Width="170"
+                Height="28"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Right"
+                Command="{Binding OnRefresh}"/>
+    </Grid>
+</Page>

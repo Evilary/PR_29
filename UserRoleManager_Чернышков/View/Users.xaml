@@ -21,12 +21,22 @@
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" IsReadOnly="True" Width="70"/>
                 <DataGridTextColumn Header="ФИО" Binding="{Binding FIO}" Width="*"/>
                 <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="180"/>
-                <DataGridComboBoxColumn Header="Роль"
-                                        SelectedValueBinding="{Binding IdRole}"
-                                        SelectedValuePath="Id"
-                                        DisplayMemberPath="Name"
-                                        Width="180"
-                                        ItemsSource="{Binding DataContext.Roles, RelativeSource={RelativeSource AncestorType=Page}}"/>
+                <DataGridTemplateColumn Header="Роль" Width="180">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding RoleName}" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox
+                            ItemsSource="{Binding DataContext.Roles, RelativeSource={RelativeSource AncestorType=Page}}"
+                            SelectedValuePath="Id"
+                            DisplayMemberPath="Name"
+                            SelectedValue="{Binding IdRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Действия" Width="180">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
